@@ -1,6 +1,6 @@
 import Express from 'express' 
 import dotenv from "dotenv"
-import connectDB from "./db/mongodbconnect.js"
+import connectDB from "./db/connectDB.js"
 import {app} from './app.js'
 
 dotenv.config({

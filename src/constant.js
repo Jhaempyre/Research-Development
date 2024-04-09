@@ -1,1 +1,1 @@
-export const DB_NAME = 'Research & Development'
+export const DB_NAME = 'research-development'

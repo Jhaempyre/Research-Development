@@ -4,7 +4,7 @@ import generateTokenAndSetCookie from "../utils/genrateToken.js";
 
 const registerUser = async(req, res) => {
    try {
-     const {fullName, username, password, email,confirmPassword, gender} = req.body
+     const {fullName, username, password, email,confirmPassword, gender,mobile} = req.body
     console.log(req.body);
      if (password !== confirmPassword) {
          return res.status(400).json({ error: "Passwords don't match" });
@@ -33,7 +33,8 @@ const registerUser = async(req, res) => {
          gender ,
          email ,
          password : hashedPassword,
-         profilePic: gender === 'male'? boyAvtar : girlAvtar
+         profilePic: gender === 'male'? boyAvtar : girlAvtar,
+         mobile
      })
      console.log(5)
 
@@ -50,6 +51,7 @@ const registerUser = async(req, res) => {
              Email : newUser.email,
              profilePic : newUser.profilePic,
              username: newUser.username,
+             mobile :  newUser.mobile
          })
  
      }else {
