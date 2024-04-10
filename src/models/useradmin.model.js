@@ -11,7 +11,7 @@ const adminSchema = new Schema({
     },
     //This is same as school email as all the authentication is done
     //from this email please don't use personal email
-    officialemail:{
+    email:{
         type:String,
         required:true,
         unique:true,
@@ -54,6 +54,10 @@ const adminSchema = new Schema({
         type:String,
         required:true,
         trim:true,
+    },
+    accessKey:{
+        type:String,
+        required:true
     },
 //country /houseno, street-name ,/area/block /locality /sector, district , state , pincode 
     schooladress:{

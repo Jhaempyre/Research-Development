@@ -1,4 +1,6 @@
-// Define the function to extract mobile number from an object
+export  const DB_NAME = 'research-development'
+
+/*// Define the function to extract mobile number from an object
 function getMobileNumber(req) {
     // Destructure the 'mobile' property from the object
     const { mobile } = req;
@@ -19,3 +21,5 @@ console.log(mobileNumber); // Output: 123-456-7890
 
 // Export the function if you're using ES6 module syntax
 export default mobileNumber;
+*/
+

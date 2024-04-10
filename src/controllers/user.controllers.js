@@ -118,9 +118,8 @@ try {
                                 .select('-password');
         res.status(200).json(notFound);
 } catch (error) {
-    console.log("Bhavyaaa is paidal",error.message)
+    console.log("Bhavyaaa is dyne",error.message)
 }
-
     
 }
 export{
