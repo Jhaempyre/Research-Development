@@ -1,19 +1,38 @@
-import mongoose, { connect } from "mongoose";
 import {DB_NAME} from "../constant.js";
+// db.js
+import mongoose from 'mongoose';
 
+const connectDB = async () => {
+  try {
+    const connectionInstance= await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+console.log(`\n MongoDB connected !! DB host:${connectionInstance.connection.host}`);
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error.message);
+  }
+};
 
+const connectToRamDatabase = async() => {
+  try {
+    console.log("ram")
+    const connectionInstance= await mongoose.createConnection(`${process.env.MONGODB_URI}/ram`).asPromise();
+    console.log(connectionInstance)
+    console.log(`\n MongoDB connected !! DB host:${connectionInstance.connection.host}`);
+    console.log('Connected to Ram database');
+  } catch (error) {
+    console.error('Error connecting to Ram database:', error.message);
+  }
+};
 
-const connectDB = async()=>{
-    try {
-        console.log('DB_NAME:', DB_NAME); // Log the value of DB_NAME
-    const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`);
+const connectToShyamDatabase = async () => {
+  try {
+    await mongoose.createConnection(`${process.env.MONGODB_URI}/shyam`, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('Connected to Shyam database');
+  } catch (error) {
+    console.error('Error connecting to Shyam database:', error.message);
+  }
+};
 
-        console.log(`\n MongoDB connected !! DB HOST: ${connectionInstance.connection.host}`)
-        
-    } catch (error) {
-        console.log("Error connecting to databse ",error.message)
-        process.exit(1)
-    }
-}
-
-export  default connectDB; 
+export { connectDB, connectToRamDatabase, connectToShyamDatabase };

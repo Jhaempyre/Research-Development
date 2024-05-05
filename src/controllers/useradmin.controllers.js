@@ -1,6 +1,11 @@
 import bcrypt from "bcrypt";
 import Admin from "../models/useradmin.model.js";
 import generateTokenAndSetCookie from "../utils/genrateToken.js";
+import mongoose from "mongoose";
+import { RamNameModel, RamRollNumberModel, ShyamNameModel, ShyamRollNumberModel } from '../models/role.model.js';
+import { connectToRamDatabase, connectToShyamDatabase } from '../db/connectDB.js';
+
+
 
 const genrateAdminKey = function (length){
      const  characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}|[]\\;\',./';
@@ -96,7 +101,7 @@ const registerAdmin = async(req,res)=>{
             const schooluniquecode = genrateUniqueCode(10)
             console.log(accessKey);
             console.log(schooluniquecode);
-            
+            await connectToRamDatabase();
             const newAdmin = new Admin({
                 fullname,
                 email ,
@@ -109,10 +114,9 @@ const registerAdmin = async(req,res)=>{
                 accessKey,
                 schooluniquecode
             })
-            console.log(newAdmin)
+           
             if(newAdmin){
                 await newAdmin.save();
-    
                 return res.status(200).json({
                     message: "Admin created successfully" ,
                     newAdmin
@@ -133,4 +137,28 @@ const registerAdmin = async(req,res)=>{
 
 }
 
-export {registerAdmin}
+const saveRecordToRamDatabase = async (name, rollNumber) => {
+    // Connect to the Ram database
+    await connectToRamDatabase();
+  
+    // Create new records in the Ram database
+    await RamNameModel.create({ name });
+    await RamRollNumberModel.create({ rollNumber });
+  
+    console.log('Record saved to Ram database successfully');
+  };
+
+  const saveRecordToShyamDatabase = async (name, rollNumber) => {
+    // Connect to the Shyam database
+    await connectToShyamDatabase();
+  
+    // Create new records in the Shyam database
+    await ShyamNameModel.create({ name });
+    await ShyamRollNumberModel.create({ rollNumber });
+  
+    console.log('Record saved to Shyam database successfully');
+  };  
+
+export {registerAdmin,
+    saveRecordToRamDatabase,
+    saveRecordToShyamDatabase}
